@@ -16,7 +16,6 @@
                     </TableSection>
                 </TableRoot>
             </TableView>
-            
             <Button x:Name="buttonNext" Text="Next" Clicked="buttonNext_Clicked"></Button>
         </StackLayout>
     </ContentPage.Content>
