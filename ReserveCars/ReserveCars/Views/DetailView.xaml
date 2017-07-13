@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="{Binding Vehicle.Name}"
+             x:Class="ReserveCars.Views.DetailView">
+
+    <ContentPage.Content>
+        <StackLayout>
+            <TableView Intent="Settings">
+                <TableRoot>
+                    <TableSection Title="Accessories">
+                        <SwitchCell Text="{Binding ABSBreakText}" On="{Binding HasABSBreak, Mode=TwoWay}"/>
+                        <SwitchCell Text="{Binding AirText}" On="{Binding HasAir, Mode=TwoWay}"/>
+                        <SwitchCell Text="{Binding MP3PlayerText}" On="{Binding HasMP3Player, Mode=TwoWay}"/>
+                        <TextCell Text="{Binding Total, Mode=TwoWay}"/>
+                    </TableSection>
+                </TableRoot>
+            </TableView>
+            
+            <Button x:Name="buttonNext" Text="Next" Clicked="buttonNext_Clicked"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
