@@ -14,8 +14,8 @@ namespace ReserveCars.ViewModels
     public class DetailViewModel : BaseViewModel
     {
         public Vehicle Vehicle { get; set; }
-        public ICommand NextCommand { get; set; }
 
+        public ICommand NextCommand { get; set; }
 
         public string ABSBreakText
         {

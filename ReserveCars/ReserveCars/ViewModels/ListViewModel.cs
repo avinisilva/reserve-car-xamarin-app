@@ -9,11 +9,13 @@ namespace ReserveCars.ViewModels
 {
     public class ListViewModel : BaseViewModel
     {
+        private bool waitVehicles;
+        private Vehicle vehicleSelected;
+
         public const string URL = "http://aluracar.herokuapp.com/";
 
         public ObservableCollection<Vehicle> Vehicles { get; set; }
 
-        private bool waitVehicles;
         public bool WaitVechiles
         {
             get
@@ -28,7 +30,6 @@ namespace ReserveCars.ViewModels
             }
         }
 
-        private Vehicle vehicleSelected;
         public Vehicle VehicleSelected
         {
             get

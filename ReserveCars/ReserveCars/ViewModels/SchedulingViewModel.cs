@@ -14,81 +14,6 @@ namespace ReserveCars.ViewModels
 
         public Schedule Schedule { get; set; }
 
-        public Vehicle Vehicle
-        {
-            get
-            {
-                return Schedule.Vehicle;
-            }
-            set
-            {
-                Schedule.Vehicle = value;
-            }
-        }
-
-        public string Name
-        {
-            get
-            {
-                return Schedule.Name;
-            }
-            set
-            {
-                Schedule.Name = value;
-                OnPropertyChanged();
-                ((Command)ScheduleCommand).ChangeCanExecute();
-            }
-        }
-
-        public string Phone
-        {
-            get
-            {
-                return Schedule.Phone;
-            }
-            set
-            {
-                Schedule.Phone = value;
-            }
-        }
-
-        public string Email
-        {
-            get
-            {
-                return Schedule.Email;
-            }
-            set
-            {
-                Schedule.Email = value;
-            }
-        }
-
-        public TimeSpan Hour
-        {
-            get
-            {
-                return Schedule.Hour;
-            }
-            set
-            {
-                Schedule.Hour = value;
-            }
-        }
-
-        public DateTime DateSchedule
-        {
-            get
-            {
-                return Schedule.DateSchedule;
-            }
-            set
-            {
-                Schedule.DateSchedule = value;
-               
-            }
-        }
-
         public ICommand ScheduleCommand { get; set; }
 
         public SchedulingViewModel(Vehicle vehicle)
@@ -99,8 +24,89 @@ namespace ReserveCars.ViewModels
             ScheduleCommand = new Command(() => {
                 MessagingCenter.Send<Schedule>(this.Schedule, "Schedule");
             }, () => {
-                return this.IsValidSchedule(); 
+                return this.IsValidSchedule();
             });
+        }
+
+        private bool IsValidSchedule()
+        {
+            return true;
+            //return !string.IsNullOrEmpty(this.Name);
+        }
+
+        public Vehicle Vehicle
+        {
+            get
+            {
+                return this.Schedule.Vehicle;
+            }
+            set
+            {
+                this.Schedule.Vehicle = value;
+            }
+        }
+
+        public string Name
+        {
+            get
+            {
+                return this.Schedule.Name;
+            }
+            set
+            {
+                this.Schedule.Name = value;
+                OnPropertyChanged();
+                ((Command)ScheduleCommand).ChangeCanExecute();
+            }
+        }
+
+        public string Phone
+        {
+            get
+            {
+                return this.Schedule.Phone;
+            }
+            set
+            {
+                this.Schedule.Phone = value;
+            }
+        }
+
+        public string Email
+        {
+            get
+            {
+                return this.Schedule.Email;
+            }
+            set
+            {
+                this.Schedule.Email = value;
+            }
+        }
+
+        public TimeSpan Hour
+        {
+            get
+            {
+                return this.Schedule.Hour;
+            }
+            set
+            {
+                this.Schedule.Hour = value;
+            }
+        }
+
+        public DateTime DateSchedule
+        {
+            get
+            {
+                return this.Schedule.DateSchedule;
+            }
+            set
+            {
+                this.Schedule.DateSchedule = value;
+               
+            }
         }
 
         public async void SaveSchedule()
@@ -123,11 +129,6 @@ namespace ReserveCars.ViewModels
                 MessagingCenter.Send<Schedule>(this.Schedule, "ScheduleSaved");
             else
                 MessagingCenter.Send<ArgumentException>(new ArgumentException(), "ScheduleError");
-        }
-
-        private bool IsValidSchedule()
-        {
-            return !string.IsNullOrEmpty(this.Name);
         }
 
         private DateTime ScheduleDate

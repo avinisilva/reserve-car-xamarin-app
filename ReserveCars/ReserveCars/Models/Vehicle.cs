@@ -13,9 +13,13 @@ namespace ReserveCars.Models
         public const int MP3_PLAYER = 50;
 
         public string Name { get; set; }
+
         public decimal Price { get; set; }
+
         public bool HasABSBreak { get; set; }
+
         public bool HasAir { get; set; }
+
         public bool HasMP3Player { get; set; }
 
         public string FormatedPrice
