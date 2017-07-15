@@ -31,7 +31,7 @@
                 </TableRoot>
             </TableView>
 
-            <Button Text="Schedule" Clicked="Button_Clicked"/>
+            <Button Text="Schedule" Command="{Binding ScheduleCommand}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

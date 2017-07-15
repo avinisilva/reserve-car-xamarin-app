@@ -16,7 +16,7 @@
                     </TableSection>
                 </TableRoot>
             </TableView>
-            <Button x:Name="buttonNext" Text="Next" Clicked="buttonNext_Clicked"></Button>
+            <Button x:Name="buttonNext" Text="Next" Command="{Binding NextCommand}"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

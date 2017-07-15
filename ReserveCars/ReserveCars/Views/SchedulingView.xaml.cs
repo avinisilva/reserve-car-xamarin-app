@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ReserveCars.Models;
+using ReserveCars.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,50 +11,47 @@ using Xamarin.Forms.Xaml;
 
 namespace ReserveCars.Views
 {
-
-    public class Schedule
-    {
-        public string Name { get; set; }
-        public string Phone { get; set; }
-        public string Email { get; set; }
-        public TimeSpan Hour { get; set; }
-
-        DateTime dateSchedule = DateTime.Today;
-        public DateTime DateSchedule
-        {
-            get
-            {
-                return dateSchedule;
-            }
-            set
-            {
-                dateSchedule = value;
-            }
-        }
-    }
-
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SchedulingView : ContentPage
     {
-        public Vehicle Vehicle { get;  }
-        public Schedule Schedule { get; set; }
-        
+        public SchedulingViewModel ViewModel { get; set; }
+
         public SchedulingView(Vehicle vehicle)
         {
             InitializeComponent();
-            this.Vehicle = vehicle;
-            this.Schedule = new Schedule();
-
-            this.BindingContext = this;
+            this.ViewModel = new SchedulingViewModel(vehicle);
+            this.BindingContext = this.ViewModel;
         }
 
-        private void Button_Clicked(object sender, EventArgs e)
+        protected override void OnAppearing()
         {
-            DisplayAlert(
-                "Scheduling", 
-                string.Format("Name: {0}, Phone: {1}, E-mail: {2}, Hour: {3}", this.Schedule.Name, 
-                    this.Schedule.Phone, this.Schedule.DateSchedule.ToString("dd/MM/yyyy"), this.Schedule.Hour),
-                "ok");
+            base.OnAppearing();
+            MessagingCenter.Subscribe<Schedule>(this, "Schedule", async (message) =>
+            {
+                var confirm = await DisplayAlert("Save Schedule", "Want to schedule?", "Ok", "Cancel");
+
+                if(confirm)
+                {
+                    this.ViewModel.SaveSchedule();
+                }
+            });
+
+            MessagingCenter.Subscribe<Schedule>(this, "ScheduleSaved", 
+                (schedule) => {
+                    DisplayAlert("Saved Success", "Scheduled", "Ok");
+                });
+
+            MessagingCenter.Subscribe<ArgumentException>(this, "ScheduleError", 
+                (error) => {
+                    DisplayAlert("Saved Error", "Not Scheduled", "Ok");
+                });
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            MessagingCenter.Unsubscribe<Schedule>(this, "Schedule");
+            MessagingCenter.Unsubscribe<Schedule>(this, "ScheduleSaved");
+            MessagingCenter.Unsubscribe<ArgumentException>(this, "ScheduleError");
         }
     }
 }
