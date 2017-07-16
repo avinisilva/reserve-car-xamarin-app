@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:converters="clr-namespace:ReserveCars.Converters" 
+            x:Class="ReserveCars.Views.MasterView"
+            Title="Perfil">
+
+    <TabbedPage.Resources>
+        <ResourceDictionary>
+            <converters:ToogleConverter x:Key="Toogle"/>
+        </ResourceDictionary>
+    </TabbedPage.Resources>
+    
+    <TabbedPage.Children>
+        <ContentPage Title="User">
+            <Frame OutlineColor="Silver" Margin="15" VerticalOptions="CenterAndExpand">
+                <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                    <Label Text="{Binding Name}"/>
+                    <BoxView HeightRequest="1" HorizontalOptions="Fill" Color="Gray"/>
+                    <Label Text="{Binding Email}"/>
+                    <BoxView HeightRequest="1" HorizontalOptions="Fill" Color="Gray"/>
+                    <Button Text="Perfil" Command="{Binding PerfilEditCommand}"/>
+                    <Button Text="My Schedules"/>
+                    <Button Text="New Schedule"/>
+                </StackLayout>
+            </Frame>
+        </ContentPage>
+
+        <ContentPage Title="Edit">
+            <Frame OutlineColor="Silver" Margin="15" VerticalOptions="CenterAndExpand">
+                <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                    <TableView>
+                        <TableRoot>
+                            <TableSection Title="Personal data">
+                                <EntryCell Placeholder="Name" Text="{Binding Name}" IsEnabled="{Binding Editing}"/>
+                                <EntryCell Placeholder="Phone" Text="{Binding Phone}" IsEnabled="{Binding Editing}"/>
+                                <EntryCell Placeholder="E-Mail" Text="{Binding Email}" IsEnabled="{Binding Editing}"/>
+                            </TableSection>
+                        </TableRoot>
+                    </TableView>
+                    <Button Text="Edit" Command="{Binding EditCommand}" IsVisible="{Binding Editing, Converter={StaticResource Key=Toogle}}"/>
+                    <Button Text="Save" Command="{Binding SaveCommand}" IsVisible="{Binding Editing}"/>
+                </StackLayout>
+            </Frame>
+        </ContentPage>
+        
+    </TabbedPage.Children>
+</TabbedPage>

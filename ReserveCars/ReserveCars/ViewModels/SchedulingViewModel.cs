@@ -14,7 +14,7 @@ namespace ReserveCars.ViewModels
 
         public Schedule Schedule { get; set; }
 
-        public ICommand ScheduleCommand { get; set; }
+        public ICommand ScheduleCommand { get; private set; }
 
         public SchedulingViewModel(Vehicle vehicle)
         {

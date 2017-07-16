@@ -1,13 +1,7 @@
 ﻿using ReserveCars.Models;
 using ReserveCars.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace ReserveCars.Views
 {
@@ -25,7 +19,13 @@ namespace ReserveCars.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            MessagingCenter.Subscribe<Vehicle>(this, "Next", (vehicle)  => {
+            Subscriber();
+        }
+
+        private void Subscriber()
+        {
+            MessagingCenter.Subscribe<Vehicle>(this, "Next", (vehicle) =>
+            {
                 Navigation.PushAsync(new SchedulingView(this.Vehicle));
             });
         }
@@ -33,8 +33,12 @@ namespace ReserveCars.Views
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
-            MessagingCenter.Unsubscribe<Vehicle>(this, "Next");
+            Unsubscriber();
         }
 
+        private void Unsubscriber()
+        {
+            MessagingCenter.Unsubscribe<Vehicle>(this, "Next");
+        }
     }
 }

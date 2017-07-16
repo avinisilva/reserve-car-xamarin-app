@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿using ReserveCars.Models;
+using ReserveCars.Views;
 using Xamarin.Forms;
 
 namespace ReserveCars
@@ -13,12 +10,15 @@ namespace ReserveCars
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new ReserveCars.Views.ListView());
+            MainPage = new LoginView();
         }
 
         protected override void OnStart()
         {
-            // Handle when your app starts
+            MessagingCenter.Subscribe<User>(this, "LoginSuccess", 
+                (user) => {
+                    MainPage = new MasterDetailView(user);
+                });
         }
 
         protected override void OnSleep()

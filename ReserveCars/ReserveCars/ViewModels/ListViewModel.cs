@@ -9,12 +9,11 @@ namespace ReserveCars.ViewModels
 {
     public class ListViewModel : BaseViewModel
     {
-        private bool waitVehicles;
-        private Vehicle vehicleSelected;
-
         public const string URL = "http://aluracar.herokuapp.com/";
 
         public ObservableCollection<Vehicle> Vehicles { get; set; }
+
+        private bool waitVehicles;
 
         public bool WaitVechiles
         {
@@ -29,6 +28,8 @@ namespace ReserveCars.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private Vehicle vehicleSelected;
 
         public Vehicle VehicleSelected
         {
@@ -54,17 +55,19 @@ namespace ReserveCars.ViewModels
             this.Vehicles.Clear();
             WaitVechiles = true;
             HttpClient http = new HttpClient();
+
             var result = await http.GetStringAsync(URL);
-            var vehiclesJson = JsonConvert.DeserializeObject<VehicleJson[]>(result);
+            var vehiclesJson = JsonConvert.DeserializeObject<VehicleDTO[]>(result);
 
             foreach (var vehicleJson in vehiclesJson)
             {
                 this.Vehicles.Add(new Vehicle { Name = vehicleJson.nome, Price = vehicleJson.preco});
             }
+
             WaitVechiles = false;
         }
 
-        class VehicleJson
+        class VehicleDTO
         {
             public string nome { get; set; }
             public int preco { get; set; }
